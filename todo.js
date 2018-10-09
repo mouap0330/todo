@@ -1,8 +1,5 @@
-//v5
-// displayTodo method should show toDoText property
-// displayTodo should tell you if todoArrays is empty
-// displayTodo should show completed property
-
+// v6 - toggles all true if everything is false,
+//      otherwise make everything true
 
 var toDoList = {
   todoArray: [],
@@ -11,17 +8,40 @@ var toDoList = {
     console.log('My To Do:');
 
     if (this.todoArray.length === 0) {
-        console.log('You have no todoArrays!')
+      console.log('You have no todoArrays!')
     } else {
-        for (var i = 0; i < this.todoArray.length; i++) {
-            // checks for completion
-            if (this.todoArray[i].completed === true) {
-                console.log('( x ) ' + this.todoArray[i].toDoText);
-            } else {
-                console.log('(   ) ' + this.todoArray[i].toDoText);
-            }
+      for (var i = 0; i < this.todoArray.length; i++) {
+        // checks for completion
+        if (this.todoArray[i].completed === true) {
+          console.log('( x ) ' + this.todoArray[i].toDoText);
+        } else {
+          console.log('(   ) ' + this.todoArray[i].toDoText);
         }
+      }
     }
+  },
+
+  // if everything is true, toggleAll will make everything false and vice versa
+  toggleAll: function() {
+
+    var completedToDos = 0;
+    var totalToDos = this.todoArray.length;
+    for (var i = 0; i < totalToDos; i++) {
+      if (this.todoArray[i].completed === true) {
+        completedToDos++;
+      }
+    }
+
+    if (completedToDos === totalToDos) {
+      for (var j = 0; j < totalToDos; j++) {
+        this.todoArray[j].completed = false;
+      }
+    } else {
+      for (var k = 0; k < totalToDos; k++) {
+        this.todoArray[k].completed = true;
+      }
+    }
+    this.displayTodo();
   },
 
   //method should add new objects to the array
@@ -53,9 +73,3 @@ var toDoList = {
     this.displayTodo();
   }
 };
-
-// toDoList.addAToDo('test');
-// toDoList.toggleCompleted(0);
-// toDoList.addAToDo('first');
-// toDoList.changeAToDo(0, 'second');
-// toDoList.deleteAToDo(1,1);
