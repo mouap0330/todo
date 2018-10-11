@@ -1,5 +1,8 @@
-// v6 - toggles all true if everything is false,
-//      otherwise make everything true
+// v7      - should be a 'Display To Do' button
+//         - should have a 'Toggle all' button
+//         - clicking 'display todo' should run toDoList.displayTodo
+//         - clicking 'toggle all' shold run toDoList.toggleall
+
 
 var toDoList = {
   todoArray: [],
@@ -8,10 +11,9 @@ var toDoList = {
     console.log('My To Do:');
 
     if (this.todoArray.length === 0) {
-      console.log('You have no todoArrays!')
+      console.log('You have no todoArrays!');
     } else {
       for (var i = 0; i < this.todoArray.length; i++) {
-        // checks for completion
         if (this.todoArray[i].completed === true) {
           console.log('( x ) ' + this.todoArray[i].toDoText);
         } else {
@@ -73,3 +75,15 @@ var toDoList = {
     this.displayTodo();
   }
 };
+
+
+var displayTodoButton = document.getElementById('displayTodoButton');
+var toggleAllButton = document.getElementById('toggleAllButton');
+
+displayTodoButton.addEventListener('click', function() {
+  toDoList.displayTodo();
+});
+
+toggleAllButton.addEventListener('click', function() {
+  toDoList.toggleAll();
+});
