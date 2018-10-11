@@ -8,19 +8,52 @@
 
 <body>
   <h1>Convenient ToDo List</h1>
-  <button id="displayTodoButton"> Display ToDo's </button>
-  <button id="toggleAllButton"> Toggle All </button>
-  <br><br>
+
+  <div>
+    <button onclick="handlers.displayToDo()"> Display ToDo's </button>
+    <button onclick="handlers.toggleAll()"> Toggle All </button>
+  </div>
+  <div>
+    <button onclick="handlers.addToDo()">Add</button>
+    <input type="text" id="addToDoTextInput">
+  </div>
+  <br>
+  <br>
+
+  <div>
+    <button onclick="handlers.changeToDo()">Change Todo</button>
+    <input id="changeToDoPositionInput" type="number">
+    <input id="changeToDoTextInput" type="text">
+  </div>
+
+  <div>
+    <button onclick="handlers.deleteToDo()">Delete Todo</button>
+    <input id="deleteToDoPositionInput" type="number">
+  </div>
+
+  <div>
+    <button onclick="handlers.toggleCompleted()">Toggle Completed</button>
+    <input id="toggleCompletedPositionInput" type="number">
+  </div>
+
 
   <form>
-    <input type="checkbox" checked>Today<br>
-    <input type="checkbox">Tomorrow<br><br>
+    <input type="checkbox" checked>Today
+    <br>
+    <input type="checkbox">Tomorrow
+    <br>
+    <br>
 
-    <input type="radio">Radio1<br>
-    <input type="radio">Radio2<br>
+    <input type="radio">Radio1
+    <br>
+    <input type="radio">Radio2
+    <br>
+
+    <input submit="Submit">
+    <br>
   </form>
 
-  <script src="script.js" type="text/javascript"></script>
+  <script src="todo.js" type="text/javascript"></script>
 </body>
 
 </html>

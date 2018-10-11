@@ -1,8 +1,7 @@
-// v7      - should be a 'Display To Do' button
-//         - should have a 'Toggle all' button
-//         - clicking 'display todo' should run toDoList.displayTodo
-//         - clicking 'toggle all' shold run toDoList.toggleall
-
+// v8     - should have wokring controlls for .addAToDo
+//        - should have corking controls for .changeAToDo
+//        - should have wokring controls for .deleteTodo
+//        - should have wokring controls for .toggleCompleted
 
 var toDoList = {
   todoArray: [],
@@ -61,29 +60,49 @@ var toDoList = {
     this.displayTodo();
   },
 
-  // flip value of 'completed' property
-  toggleCompleted: function(position) {
-    var todoArrayVar = this.todoArray[position];
-    console.log('here' + todoArrayVar);
-    todoArrayVar.completed = !todoArrayVar.completed;
-    this.displayTodo();
-  },
-
   //should delete the value at position indicated
   deleteAToDo: function(position) {
     this.todoArray.splice(position, 1);
     this.displayTodo();
-  }
+  },
+  // flip value of 'completed' property
+  toggleCompleted: function(position) {
+    var todoArrayVar = this.todoArray[position];
+    todoArrayVar.completed = !todoArrayVar.completed;
+    this.displayTodo();
+  },
 };
 
+var handlers = {
+  displayToDo: function() {
+    toDoList.displayTodo();
+  },
+  toggleAll: function() {
+    toDoList.toggleAll();
+  },
+  addToDo: function() {
+    var addToDoTextInput = document.getElementById('addToDoTextInput');
+    toDoList.addAToDo(addToDoTextInput.value);
+    addToDoTextInput.value = '';
+  },
 
-var displayTodoButton = document.getElementById('displayTodoButton');
-var toggleAllButton = document.getElementById('toggleAllButton');
+  changeToDo: function() {
+    var changeToDoPositionInput = document.getElementById("changeToDoPositionInput");
+    var changeToDoTextInput = document.getElementById("changeToDoTextInput");
+    toDoList.changeAToDo(changeToDoPositionInput.valueAsNumber, changeToDoTextInput.value);
+    changeToDoPositionInput.value = '';
+    changeToDoTextInput.value = '';
+  },
 
-displayTodoButton.addEventListener('click', function() {
-  toDoList.displayTodo();
-});
+  deleteToDo: function() {
+    var deleteToDoPositionInput = document.getElementById("deleteToDoPositionInput");
+    toDoList.deleteAToDo(deleteToDoPositionInput.valueAsNumber);
+    deleteToDoPositionInput.value = '';
+  },
 
-toggleAllButton.addEventListener('click', function() {
-  toDoList.toggleAll();
-});
+  toggleCompleted: function() {
+    var toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
+    toDoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+    toggleCompletedPositionInput.value = '';
+  }
+};
