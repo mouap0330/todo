@@ -1,7 +1,8 @@
-// v9   - should be an li element for every todo
-//      - each li element should contain .todotext
-//      - each li element should show .completed
-
+// v10   - there should be a way to create delete button
+//       - should be a delete button for each todo
+//       - each li should have an id that has the todo position
+//       - delete buttos should have access to the todo id
+//       - clicking delete should update the todo list and the DOM
 var toDoList = {
   todoArray: [],
 
@@ -54,9 +55,9 @@ var toDoList = {
 };
 
 var handlers = {
-  // displayToDo: function() {
-  //   toDoList.displayTodo();
-  // },
+  displayToDo: function() {
+    toDoList.displayTodo();
+  },
   toggleAll: function() {
     toDoList.toggleAll();
     view.displayTodo();
@@ -77,10 +78,8 @@ var handlers = {
     view.displayTodo();
   },
 
-  deleteToDo: function() {
-    var deleteToDoPositionInput = document.getElementById("deleteToDoPositionInput");
-    toDoList.deleteAToDo(deleteToDoPositionInput.valueAsNumber);
-    deleteToDoPositionInput.value = '';
+  deleteToDo: function(position) {
+    toDoList.deleteAToDo(position);
     view.displayTodo();
   },
 
@@ -106,9 +105,31 @@ var view = {
       } else {
         toDoTextWithCompletion = '( ) ' + todoVar.toDoText;
       }
-
+      todosLi.id = i;
       todosLi.textContent = toDoTextWithCompletion;
+      todosLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todosLi);
     }
+  },
+
+  createDeleteButton: function() {
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteButton';
+    return deleteButton;
+  },
+  setUpEventListeners: function() {
+    var todosUl = document.querySelector('ul');
+    todosUl.addEventListener('click', function(event) {
+
+      // get element that was clicked
+      var elementClicked = event.target;
+      //check if elementClicked is a delete button
+      if (elementClicked.className === 'deleteButton') {
+        handlers.deleteToDo(parseInt(elementClicked.parentNode.id));
+      }
+    });
   }
 };
+
+view.setUpEventListeners();
