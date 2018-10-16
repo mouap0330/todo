@@ -1,8 +1,6 @@
-// v10   - there should be a way to create delete button
-//       - should be a delete button for each todo
-//       - each li should have an id that has the todo position
-//       - delete buttos should have access to the todo id
-//       - clicking delete should update the todo list and the DOM
+// v11    - todoLost.toggleAll shoudl use forEach
+//        - view.displayToDo should use forEach
+//        ** Getting rid of all forLoops
 var toDoList = {
   todoArray: [],
 
@@ -11,22 +9,23 @@ var toDoList = {
 
     var completedToDos = 0;
     var totalToDos = this.todoArray.length;
-    for (var i = 0; i < totalToDos; i++) {
-      if (this.todoArray[i].completed === true) {
+
+    // get # completed todos
+    this.todoArray.forEach(function(todo) {
+      if (todo.completed === true) {
         completedToDos++;
       }
-    }
+    });
 
-    if (completedToDos === totalToDos) {
-      for (var j = 0; j < totalToDos; j++) {
-        this.todoArray[j].completed = false;
+    this.todoArray.forEach(function(todo) {
+      // case 1: if everything true, make everything false
+      if (completedToDos === totalToDos) {
+        todo.completed = false;
+        // otherwise make everything true
+      } else {
+        todo.completed = true;
       }
-    } else {
-      for (var k = 0; k < totalToDos; k++) {
-        this.todoArray[k].completed = true;
-      }
-    }
-
+    });
   },
 
   //method should add new objects to the array
@@ -92,24 +91,45 @@ var handlers = {
 };
 
 var view = {
-  displayTodo: function() {
-    var todosUl = document.querySelector('ul');
-    todosUl.innerHTML = '';
-    for (var i = 0; i < toDoList.todoArray.length; i++) {
+    displayTodo: function() {
+      var todosUl = document.querySelector('ul');
+      todosUl.innerHTML = '';
+
+      toDoList.todoArray.forEach(function(todo, position) {
+        var todosLi = document.createElement('li');
+        var todoVar = toDoList.todoArray[i];
+        var toDoTextWithCompletion = '';
+
+        if (todoVar.completed === true) {
+          toDoTextWithCompletion = '(x) ' + todoVar.toDoText;
+        } else {
+          toDoTextWithCompletion = '( ) ' + todoVar.toDoText;
+        }
+        todosLi.id = position;
+        todosLi.textContent = toDoTextWithCompletion;
+        todosLi.appendChild(this.createDeleteButton());
+        todosUl.appendChild(todosLi);
+      }, this);
+    },
+
+    toDoList.todoArray.forEach(function(todo, position) {
       var todosLi = document.createElement('li');
-      var todoVar = toDoList.todoArray[i];
       var toDoTextWithCompletion = '';
 
-      if (todoVar.completed === true) {
-        toDoTextWithCompletion = '(x) ' + todoVar.toDoText;
+      if (todo.completed === true) {
+        toDoTextWithCompletion = '(x) ' + todo.toDoText;
       } else {
-        toDoTextWithCompletion = '( ) ' + todoVar.toDoText;
+        toDoTextWithCompletion = '( ) ' + todo.toDoText;
       }
-      todosLi.id = i;
+      todosLi.id = position;
       todosLi.textContent = toDoTextWithCompletion;
+
+      // 'this' refers to the view object
+      // forEach(callback, thsi) will refer to same 'this'
+
       todosLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todosLi);
-    }
+    }, this);
   },
 
   createDeleteButton: function() {
